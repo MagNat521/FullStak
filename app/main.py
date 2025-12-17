@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import get_settings
+from app.core.db import create_tables
 from app.api.v1.router import api_router as api_v1_router
+from app import models
 
 settings = get_settings()
 
@@ -21,6 +23,13 @@ app.add_middleware(
 )
 
 app.include_router(api_v1_router, prefix=settings.API_V1_PREFIX)
+
+
+@app.on_event("startup")
+async def startup():
+    """Создание таблиц базы данных при запуске приложения"""
+    create_tables()
+
 
 @app.get("/", tags=["root"])
 def read_root():
