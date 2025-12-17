@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api.v1.endpoints import health, auth, uploads, inspections, defects, tasks, admin
+from app.api.v1.endpoints import health, auth, uploads, inspections, defects, tasks, admin, repair_requests
 
 api_router = APIRouter()
 api_router.include_router(health.router, prefix="/health", tags=["health"])
@@ -9,3 +9,4 @@ api_router.include_router(inspections.router, prefix="/inspections", tags=["insp
 api_router.include_router(defects.router, prefix="/defects", tags=["defects"])
 api_router.include_router(tasks.router, prefix="/tasks", tags=["tasks"])
 api_router.include_router(admin.router, prefix="/admin", tags=["admin"])
+api_router.include_router(repair_requests.router, prefix="/repair-requests", tags=["repair-requests"],)
