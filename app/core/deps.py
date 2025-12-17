@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 
-from app.core.db import SessionLocal  # если у тебя по‑другому называется, поправь
+from app.core.db import SessionLocal, get_db as get_db_session
 from app.core.security import SECRET_KEY, ALGORITHM
 from app import models
 
