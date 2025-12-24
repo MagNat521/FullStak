@@ -1,10 +1,27 @@
-version: "3.8"
+version: "3.9"
+
 services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: fullstak
+      POSTGRES_USER: fullstak
+      POSTGRES_PASSWORD: fullstak
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
   api:
     build: .
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://fullstak:fullstak@db:5432/fullstak
     ports:
       - "8000:8000"
-    env_file: .env
-    volumes:
-      - ./data:/data
-    depends_on: []
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:

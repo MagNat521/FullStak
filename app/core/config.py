@@ -1,6 +1,7 @@
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 from pathlib import Path
+import os
 
 class Settings(BaseSettings):
     APP_NAME: str = "Road Marking Control"
@@ -8,7 +9,7 @@ class Settings(BaseSettings):
     ENV: str = "dev"
     DEBUG: bool = True
     STORAGE_PATH: str = "/data/uploads"
-    DATABASE_URL: str = "postgresql://postgres:1234@localhost:5432/fullstak"
+    DATABASE_URL: str = os.getenv("DATABASE_URL")
 
     class Config:
         env_file = ".env"
