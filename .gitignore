@@ -1,0 +1,41 @@
+# Виртуальное окружение
+.venv/
+venv/
+env/
+
+# Кэш Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Логи и временные файлы
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Кэш и артефакты инструментов
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE / редакторы
+.vscode/
+.idea/
+*.iml
+
+# База данных (если локальная SQLite)
+*.db
+*.sqlite3
+
+# Файлы окружения и секреты
+.env
+.env.*
+!.env.example
+
+# Docker
+docker-data/
+
+road_marking_control*/

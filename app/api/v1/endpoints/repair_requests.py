@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.core.deps import get_db, get_current_user  # функция, которая даёт Session
-from app import models
+from app.models.user import User
 from app.schemas.repair_request import (
     RepairRequest,
     RepairRequestCreate,
@@ -13,8 +13,6 @@ from app.schemas.repair_request import (
     RepairRequestList,
 )
 from app.services import repair_request_service
-
-from app import models
 
 router = APIRouter(prefix="/repair-requests", tags=["repair-requests"])
 
@@ -24,7 +22,7 @@ def list_repair_requests(
     skip: int = 0,
     limit: int = 50,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
 ):
     items = repair_request_service.get_requests(db, skip=skip, limit=limit)
     total = len(items)
@@ -35,7 +33,7 @@ def list_repair_requests(
 def get_repair_request(
     request_id: int,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
 ):
     obj = repair_request_service.get_request(db, request_id)
     if not obj:
@@ -54,7 +52,7 @@ def get_repair_request(
 def create_repair_request(
     data: RepairRequestCreate,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
 ):
     return repair_request_service.create_request(db, data)
 
@@ -64,7 +62,7 @@ def update_repair_request(
     request_id: int,
     data: RepairRequestUpdate,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
 ):
     obj = repair_request_service.get_request(db, request_id)
     if not obj:
@@ -82,7 +80,7 @@ def update_repair_request(
 def delete_repair_request(
     request_id: int,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
 ):
     obj = repair_request_service.get_request(db, request_id)
     if not obj:
