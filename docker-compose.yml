@@ -7,21 +7,29 @@ services:
       POSTGRES_DB: fullstak
       POSTGRES_USER: fullstak
       POSTGRES_PASSWORD: fullstak
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
 
   api:
     build: .
     depends_on:
       - db
+    env_file:
+      - .env
     environment:
       DATABASE_URL: postgresql://fullstak:fullstak@db:5432/fullstak
     ports:
       - "8000:8000"
-    env_file:
-      - .env
+
+  frontend:
+    build:
+      context: ./road-markings-frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    environment:
+      # фронт внутри docker‑сети обращается к бэку по имени сервиса api
+      VITE_API_BASE_URL: http://fullstak:8000/api/v1
+    ports:
+      - "5173:5173" # порт Vite dev/preview
 
 volumes:
   postgres_data:
