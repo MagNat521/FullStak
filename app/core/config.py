@@ -9,10 +9,9 @@ class Settings(BaseSettings):
     ENV: str = "dev"
     DEBUG: bool = True
     STORAGE_PATH: str = "/data/uploads"
-    DATABASE_URL: str = os.getenv("DATABASE_URL")
-
+    DATABASE_URL: str  # без os.getenv
     class Config:
-        env_file = ".env"
+        env_file = "../.env"
 
 @lru_cache
 def get_settings() -> Settings:
